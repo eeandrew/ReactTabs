@@ -94,17 +94,17 @@
 					null,
 					_react2.default.createElement(
 						TabPanel,
-						{ key: 1 },
+						{ tab: 'Tab1', key: 1 },
 						'1'
 					),
 					_react2.default.createElement(
 						TabPanel,
-						{ key: 2 },
+						{ tab: 'Tab2', key: 2 },
 						'2'
 					),
 					_react2.default.createElement(
 						TabPanel,
-						{ key: 3 },
+						{ tab: 'Tab2', key: 3 },
 						'3'
 					)
 				);
@@ -19737,6 +19737,10 @@
 
 	var _TabPanel2 = _interopRequireDefault(_TabPanel);
 
+	var _Nav = __webpack_require__(298);
+
+	var _Nav2 = _interopRequireDefault(_Nav);
+
 	__webpack_require__(296);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -19780,11 +19784,7 @@
 				return _react2.default.createElement(
 					'div',
 					{ className: 'tabs' },
-					_react2.default.createElement(
-						'p',
-						null,
-						'Hello World'
-					),
+					_react2.default.createElement(_Nav2.default, { panels: this.props.children }),
 					this.renderChildren()
 				);
 			}
@@ -38425,6 +38425,111 @@
 
 	// module
 	exports.push([module.id, ".tabs {\n\tbackground: #fff;\n}", ""]);
+
+	// exports
+
+
+/***/ },
+/* 298 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(148);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	__webpack_require__(299);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Nav = function (_React$Component) {
+		_inherits(Nav, _React$Component);
+
+		function Nav() {
+			_classCallCheck(this, Nav);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(Nav).apply(this, arguments));
+		}
+
+		_createClass(Nav, [{
+			key: 'renderNavTabs',
+			value: function renderNavTabs() {
+				var navTabs = [];
+				var panels = this.props.panels;
+				_react2.default.Children.forEach(panels, function (panel, index) {
+					navTabs.push(_react2.default.createElement(
+						'li',
+						{ className: 'nav-item' },
+						panel.props.tab
+					));
+				});
+				return navTabs;
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'ul',
+					{ className: 'nav' },
+					this.renderNavTabs.apply(this)
+				);
+			}
+		}]);
+
+		return Nav;
+	}(_react2.default.Component);
+
+	exports.default = Nav;
+
+/***/ },
+/* 299 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(300);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(295)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./Nav.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./Nav.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 300 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(294)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".nav {\n\tdisplay: flex;\n\tdisplay: -webkit-flex;\n\tmargin:0;\n\tpadding:0;\n}\n\n.nav .nav-item {\n\tlist-style: none;\n\tmargin:5px;\n\tpadding:5px;\n\tbackground: #F5F5F5;\n}", ""]);
 
 	// exports
 

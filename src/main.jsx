@@ -8,9 +8,9 @@ class App extends React.Component {
 	render() {
 		return (
 			<ReactTabs>
-				<TabPanel key={1}>1</TabPanel>
-				<TabPanel key={2}>2</TabPanel>
-				<TabPanel key={3}>3</TabPanel>
+				<TabPanel tab="Tab1" key={1}>1</TabPanel>
+				<TabPanel tab="Tab2" key={2}>2</TabPanel>
+				<TabPanel tab="Tab2" key={3}>3</TabPanel>
 			</ReactTabs>
 		);
 	}

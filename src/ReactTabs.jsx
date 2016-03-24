@@ -1,5 +1,6 @@
 import React from 'react';
 import TabPanel from './TabPanel.jsx';
+import Nav from './Nav.jsx';
 import './ReactTabs.css';
 
 class ReactTabs extends React.Component {
@@ -25,7 +26,7 @@ class ReactTabs extends React.Component {
 	render() {
 		return (
 			<div className="tabs">
-				<p>Hello World</p>
+				<Nav panels={this.props.children}/>
 				{this.renderChildren()}
 			</div>	
 		);
