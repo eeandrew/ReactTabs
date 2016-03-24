@@ -19760,6 +19760,9 @@
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ReactTabs).call(this, props));
 
 			_this.bindFunc();
+			_this.state = {
+				activeIndex: 0
+			};
 			return _this;
 		}
 
@@ -19771,12 +19774,21 @@
 		}, {
 			key: 'renderChildren',
 			value: function renderChildren() {
+				var _this2 = this;
+
 				var children = this.props.children;
 				var newChildren = [];
 				_react2.default.Children.forEach(children, function (child, index) {
-					newChildren.push(_react2.default.cloneElement(child, { isActive: index === 1 }));
+					newChildren.push(_react2.default.cloneElement(child, { isActive: index === _this2.state.activeIndex }));
 				});
 				return newChildren;
+			}
+		}, {
+			key: 'onTabClick',
+			value: function onTabClick(index) {
+				this.setState({
+					activeIndex: index
+				});
 			}
 		}, {
 			key: 'render',
@@ -19784,7 +19796,7 @@
 				return _react2.default.createElement(
 					'div',
 					{ className: 'tabs' },
-					_react2.default.createElement(_Nav2.default, { panels: this.props.children }),
+					_react2.default.createElement(_Nav2.default, { panels: this.props.children, onTabClick: this.onTabClick.bind(this) }),
 					this.renderChildren()
 				);
 			}
@@ -38445,6 +38457,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _classnames = __webpack_require__(291);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
 	__webpack_require__(299);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -38458,25 +38474,40 @@
 	var Nav = function (_React$Component) {
 		_inherits(Nav, _React$Component);
 
-		function Nav() {
+		function Nav(props) {
 			_classCallCheck(this, Nav);
 
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(Nav).apply(this, arguments));
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Nav).call(this, props));
+
+			_this.state = {
+				activeIndex: 0
+			};
+			return _this;
 		}
 
 		_createClass(Nav, [{
 			key: 'renderNavTabs',
 			value: function renderNavTabs() {
+				var _this2 = this;
+
 				var navTabs = [];
 				var panels = this.props.panels;
 				_react2.default.Children.forEach(panels, function (panel, index) {
 					navTabs.push(_react2.default.createElement(
 						'li',
-						{ className: 'nav-item' },
+						{ className: "nav-item " + (_this2.state.activeIndex === index ? 'active' : ''), key: index, onClick: _this2.onTabClick.bind(_this2, index) },
 						panel.props.tab
 					));
 				});
 				return navTabs;
+			}
+		}, {
+			key: 'onTabClick',
+			value: function onTabClick(index) {
+				this.setState({
+					activeIndex: index
+				});
+				this.props.onTabClick(index);
 			}
 		}, {
 			key: 'render',
@@ -38529,7 +38560,7 @@
 
 
 	// module
-	exports.push([module.id, ".nav {\n\tdisplay: flex;\n\tdisplay: -webkit-flex;\n\tmargin:0;\n\tpadding:0;\n}\n\n.nav .nav-item {\n\tlist-style: none;\n\tmargin:5px;\n\tpadding:5px;\n\tbackground: #F5F5F5;\n}", ""]);
+	exports.push([module.id, ".nav {\n\tdisplay: flex;\n\tdisplay: -webkit-flex;\n\tmargin:0;\n\tpadding:0;\n}\n\n.nav .nav-item {\n\tlist-style: none;\n\tmargin:5px;\n\tpadding:5px;\n\tbackground: #F5F5F5;\n}\n\n.nav .nav-item.active {\n\tborder-bottom:2px solid #ccc;\n}", ""]);
 
 	// exports
 
