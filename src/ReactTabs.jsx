@@ -19,9 +19,12 @@ class ReactTabs extends React.Component {
 
 	renderChildren() {
 		const children = this.props.children;
-		const newChildren = [];
+		let newChildren = [];
 		React.Children.forEach(children,(child,index) => {
 			newChildren.push(React.cloneElement(child,{isActive:index === this.state.activeIndex}))
+		})
+		newChildren = newChildren.filter((child,index)=>{
+			return index === this.state.activeIndex;
 		})
 		return newChildren;
 	}

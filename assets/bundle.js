@@ -95,23 +95,92 @@
 					_react2.default.createElement(
 						TabPanel,
 						{ tab: 'Tab1', key: 1 },
-						'1'
+						_react2.default.createElement(Tab1, null)
 					),
 					_react2.default.createElement(
 						TabPanel,
 						{ tab: 'Tab2', key: 2 },
-						'2'
+						_react2.default.createElement(Tab2, null)
 					),
 					_react2.default.createElement(
 						TabPanel,
 						{ tab: 'Tab2', key: 3 },
-						'3'
+						_react2.default.createElement(Tab3, null)
 					)
 				);
 			}
 		}]);
 
 		return App;
+	}(_react2.default.Component);
+
+	var Tab1 = function (_React$Component2) {
+		_inherits(Tab1, _React$Component2);
+
+		function Tab1() {
+			_classCallCheck(this, Tab1);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(Tab1).apply(this, arguments));
+		}
+
+		_createClass(Tab1, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ style: { height: '200px', width: '100%' } },
+					'Tab1'
+				);
+			}
+		}]);
+
+		return Tab1;
+	}(_react2.default.Component);
+
+	var Tab2 = function (_React$Component3) {
+		_inherits(Tab2, _React$Component3);
+
+		function Tab2() {
+			_classCallCheck(this, Tab2);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(Tab2).apply(this, arguments));
+		}
+
+		_createClass(Tab2, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ style: { height: '300px', width: '100%' } },
+					'Tab2'
+				);
+			}
+		}]);
+
+		return Tab2;
+	}(_react2.default.Component);
+
+	var Tab3 = function (_React$Component4) {
+		_inherits(Tab3, _React$Component4);
+
+		function Tab3() {
+			_classCallCheck(this, Tab3);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(Tab3).apply(this, arguments));
+		}
+
+		_createClass(Tab3, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ style: { height: '150px', width: '100%' } },
+					'Tab3'
+				);
+			}
+		}]);
+
+		return Tab3;
 	}(_react2.default.Component);
 
 	_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app'));
@@ -19737,11 +19806,11 @@
 
 	var _TabPanel2 = _interopRequireDefault(_TabPanel);
 
-	var _Nav = __webpack_require__(298);
+	var _Nav = __webpack_require__(296);
 
 	var _Nav2 = _interopRequireDefault(_Nav);
 
-	__webpack_require__(296);
+	__webpack_require__(299);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -19780,6 +19849,9 @@
 				var newChildren = [];
 				_react2.default.Children.forEach(children, function (child, index) {
 					newChildren.push(_react2.default.cloneElement(child, { isActive: index === _this2.state.activeIndex }));
+				});
+				newChildren = newChildren.filter(function (child, index) {
+					return index === _this2.state.activeIndex;
 				});
 				return newChildren;
 			}
@@ -38405,46 +38477,6 @@
 /* 296 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(297);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(295)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./ReactTabs.css", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./ReactTabs.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 297 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(294)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".tabs {\n\tbackground: #fff;\n}", ""]);
-
-	// exports
-
-
-/***/ },
-/* 298 */
-/***/ function(module, exports, __webpack_require__) {
-
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -38461,7 +38493,7 @@
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	__webpack_require__(299);
+	__webpack_require__(297);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -38526,13 +38558,13 @@
 	exports.default = Nav;
 
 /***/ },
-/* 299 */
+/* 297 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(300);
+	var content = __webpack_require__(298);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(295)(content, {});
@@ -38552,7 +38584,7 @@
 	}
 
 /***/ },
-/* 300 */
+/* 298 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(294)();
@@ -38561,6 +38593,46 @@
 
 	// module
 	exports.push([module.id, ".nav {\n\tdisplay: flex;\n\tdisplay: -webkit-flex;\n\tmargin:0;\n\tpadding:0;\n}\n\n.nav .nav-item {\n\tlist-style: none;\n\tmargin:5px;\n\tpadding:5px;\n\tbackground: #F5F5F5;\n}\n\n.nav .nav-item.active {\n\tborder-bottom:2px solid #ccc;\n}", ""]);
+
+	// exports
+
+
+/***/ },
+/* 299 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(300);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(295)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./ReactTabs.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./ReactTabs.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 300 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(294)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".tabs {\n\tbackground: #fff;\n}", ""]);
 
 	// exports
 
