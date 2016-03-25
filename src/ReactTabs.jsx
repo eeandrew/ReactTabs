@@ -2,6 +2,8 @@ import React from 'react';
 import TabPanel from './TabPanel.jsx';
 import Nav from './Nav.jsx';
 import './ReactTabs.css';
+import HorizontalWrapper from './HorizontalWrapper.jsx';
+import ReactDOM from 'react-dom';
 
 class ReactTabs extends React.Component {
 
@@ -9,7 +11,8 @@ class ReactTabs extends React.Component {
 		super(props);
 		this.bindFunc();
 		this.state = {
-			activeIndex : 0
+			activeIndex : 0,
+			tabWidth : 0,
 		};
 	}
 
@@ -21,12 +24,19 @@ class ReactTabs extends React.Component {
 		const children = this.props.children;
 		let newChildren = [];
 		React.Children.forEach(children,(child,index) => {
-			newChildren.push(React.cloneElement(child,{isActive:index === this.state.activeIndex}))
+			newChildren.push(React.cloneElement(child,{isActive:index === this.state.activeIndex,width:this.state.tabWidth}))
 		})
-		newChildren = newChildren.filter((child,index)=>{
-			return index === this.state.activeIndex;
-		})
+		// newChildren = newChildren.filter((child,index)=>{
+		// 	return index === this.state.activeIndex;
+		// })
 		return newChildren;
+	}
+
+	componentDidMount() {
+		this.setState({
+			tabWidth : ReactDOM.findDOMNode(this).offsetWidth,
+			tabCount : this.props.children.length,
+		});
 	}
 
 	onTabClick(index) {
@@ -39,7 +49,9 @@ class ReactTabs extends React.Component {
 		return (
 			<div className="tabs">
 				<Nav panels={this.props.children} onTabClick={this.onTabClick.bind(this)}/>
-				{this.renderChildren()}
+				<HorizontalWrapper tabWidth={this.state.tabWidth}  tabCount={this.state.tabCount}  activeIndex={this.state.activeIndex}>
+					{this.renderChildren()}
+				</HorizontalWrapper>
 			</div>	
 		);
 	}

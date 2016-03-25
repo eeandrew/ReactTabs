@@ -10,4 +10,5 @@ tabs {
 	padding: 10px;
 	border-bottom: 1px solid #ccc;  
 	list-style: none;
+	float: left;
 } 

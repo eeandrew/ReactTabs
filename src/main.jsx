@@ -27,7 +27,7 @@ class Tab1 extends React.Component {
 class Tab2 extends React.Component {
 	render() {
 		return (
-			<div style={{height:'300px',width:'100%'}}>Tab2</div>	
+			<div style={{height:'200px',width:'100%'}}>Tab2</div>	
 		)
 	}
 }
@@ -35,7 +35,7 @@ class Tab2 extends React.Component {
 class Tab3 extends React.Component {
 	render() {
 		return (
-			<div style={{height:'150px',width:'100%'}}>Tab3</div>	
+			<div style={{height:'200px',width:'100%'}}>Tab3</div>	
 		)
 	}
 }

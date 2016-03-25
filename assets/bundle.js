@@ -151,7 +151,7 @@
 			value: function render() {
 				return _react2.default.createElement(
 					'div',
-					{ style: { height: '300px', width: '100%' } },
+					{ style: { height: '200px', width: '100%' } },
 					'Tab2'
 				);
 			}
@@ -174,7 +174,7 @@
 			value: function render() {
 				return _react2.default.createElement(
 					'div',
-					{ style: { height: '150px', width: '100%' } },
+					{ style: { height: '200px', width: '100%' } },
 					'Tab3'
 				);
 			}
@@ -19812,6 +19812,14 @@
 
 	__webpack_require__(299);
 
+	var _HorizontalWrapper = __webpack_require__(301);
+
+	var _HorizontalWrapper2 = _interopRequireDefault(_HorizontalWrapper);
+
+	var _reactDom = __webpack_require__(2);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -19830,7 +19838,8 @@
 
 			_this.bindFunc();
 			_this.state = {
-				activeIndex: 0
+				activeIndex: 0,
+				tabWidth: 0
 			};
 			return _this;
 		}
@@ -19848,12 +19857,20 @@
 				var children = this.props.children;
 				var newChildren = [];
 				_react2.default.Children.forEach(children, function (child, index) {
-					newChildren.push(_react2.default.cloneElement(child, { isActive: index === _this2.state.activeIndex }));
+					newChildren.push(_react2.default.cloneElement(child, { isActive: index === _this2.state.activeIndex, width: _this2.state.tabWidth }));
 				});
-				newChildren = newChildren.filter(function (child, index) {
-					return index === _this2.state.activeIndex;
-				});
+				// newChildren = newChildren.filter((child,index)=>{
+				// 	return index === this.state.activeIndex;
+				// })
 				return newChildren;
+			}
+		}, {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				this.setState({
+					tabWidth: _reactDom2.default.findDOMNode(this).offsetWidth,
+					tabCount: this.props.children.length
+				});
 			}
 		}, {
 			key: 'onTabClick',
@@ -19869,7 +19886,11 @@
 					'div',
 					{ className: 'tabs' },
 					_react2.default.createElement(_Nav2.default, { panels: this.props.children, onTabClick: this.onTabClick.bind(this) }),
-					this.renderChildren()
+					_react2.default.createElement(
+						_HorizontalWrapper2.default,
+						{ tabWidth: this.state.tabWidth, tabCount: this.state.tabCount, activeIndex: this.state.activeIndex },
+						this.renderChildren()
+					)
 				);
 			}
 		}]);
@@ -19928,9 +19949,12 @@
 				var classes = (0, _classnames3.default)(_defineProperty({
 					active: this.props.isActive
 				}, 'tab-panel', true));
+				var widthStyle = {
+					width: this.props.width + 'px'
+				};
 				return _React2.default.createElement(
 					'li',
-					{ className: classes },
+					{ className: classes, style: widthStyle },
 					this.props.children
 				);
 			}
@@ -38158,7 +38182,7 @@
 
 
 	// module
-	exports.push([module.id, "tabs {\n\tlist-style: none;\n}\n\n.tabs .active {\n\tbackground: #f5f5f5;\n}\n\n.tabs .tab-panel {\n\tpadding: 10px;\n\tborder-bottom: 1px solid #ccc;  \n\tlist-style: none;\n} ", ""]);
+	exports.push([module.id, "tabs {\n\tlist-style: none;\n}\n\n.tabs .active {\n\tbackground: #f5f5f5;\n}\n\n.tabs .tab-panel {\n\tpadding: 10px;\n\tborder-bottom: 1px solid #ccc;  \n\tlist-style: none;\n\tfloat: left;\n} ", ""]);
 
 	// exports
 
@@ -38633,6 +38657,129 @@
 
 	// module
 	exports.push([module.id, ".tabs {\n\tbackground: #fff;\n}", ""]);
+
+	// exports
+
+
+/***/ },
+/* 301 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(148);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(2);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	__webpack_require__(302);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var HorizontalWrapper = function (_React$Component) {
+		_inherits(HorizontalWrapper, _React$Component);
+
+		function HorizontalWrapper() {
+			_classCallCheck(this, HorizontalWrapper);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(HorizontalWrapper).apply(this, arguments));
+		}
+
+		_createClass(HorizontalWrapper, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				var _this2 = this;
+
+				this.scroller = new IScroll(_reactDom2.default.findDOMNode(this), {
+					scrollX: true,
+					scrollY: false,
+					scrollbars: false,
+					probeType: 3,
+					momentum: false
+				});
+				setTimeout(function () {
+					_this2.scroller.refresh();
+				}, 1);
+			}
+		}, {
+			key: 'componentWillUpdate',
+			value: function componentWillUpdate(nextProps) {
+				this.scroller.scrollTo(-(this.props.tabWidth * nextProps.activeIndex), 0, 200);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var scrollerStyle = {
+					width: this.props.tabWidth * this.props.tabCount + 'px'
+				};
+				return _react2.default.createElement(
+					'div',
+					{ className: 'horizontal-wrapper' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'scroller-wrapper', style: scrollerStyle },
+						this.props.children
+					)
+				);
+			}
+		}]);
+
+		return HorizontalWrapper;
+	}(_react2.default.Component);
+
+	exports.default = HorizontalWrapper;
+
+/***/ },
+/* 302 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(303);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(295)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./HorizontalWrapper.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./HorizontalWrapper.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 303 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(294)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".horizontal-wrapper {\n\twidth:100%;\n\tposition: relative;\n\toverflow: hidden;\n\theight: 300px;\n}\n\n.horizontal-wrapper  > .scroller-wrapper {\n\tposition: absolute;\n}", ""]);
 
 	// exports
 

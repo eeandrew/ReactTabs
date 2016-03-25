@@ -8,6 +8,9 @@ export default class TabPanel extends React.Component {
 			active : this.props.isActive,
 			[`tab-panel`] : true,
 		})
-		return <li className={classes}>{this.props.children}</li>
+		let widthStyle = {
+			width : this.props.width + 'px'
+		}
+		return <li className={classes} style={widthStyle}>{this.props.children}</li>
 	}
 }
