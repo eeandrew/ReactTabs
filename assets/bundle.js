@@ -91,21 +91,33 @@
 			value: function render() {
 				return _react2.default.createElement(
 					_ReactTabs2.default,
-					null,
+					{ tabHeight: '200px' },
 					_react2.default.createElement(
 						TabPanel,
 						{ tab: 'Tab1', key: 1 },
-						_react2.default.createElement(Tab1, null)
+						_react2.default.createElement(
+							Tab,
+							{ bg: 'rgb(251,73,1)' },
+							'Tab1'
+						)
 					),
 					_react2.default.createElement(
 						TabPanel,
 						{ tab: 'Tab2', key: 2 },
-						_react2.default.createElement(Tab2, null)
+						_react2.default.createElement(
+							Tab,
+							{ bg: 'rgb(253,181,36)' },
+							'Tab2'
+						)
 					),
 					_react2.default.createElement(
 						TabPanel,
-						{ tab: 'Tab2', key: 3 },
-						_react2.default.createElement(Tab3, null)
+						{ tab: 'Tab3', key: 3 },
+						_react2.default.createElement(
+							Tab,
+							{ bg: 'rgb(41,201,51)' },
+							'Tab3'
+						)
 					)
 				);
 			}
@@ -114,73 +126,27 @@
 		return App;
 	}(_react2.default.Component);
 
-	var Tab1 = function (_React$Component2) {
-		_inherits(Tab1, _React$Component2);
+	var Tab = function (_React$Component2) {
+		_inherits(Tab, _React$Component2);
 
-		function Tab1() {
-			_classCallCheck(this, Tab1);
+		function Tab() {
+			_classCallCheck(this, Tab);
 
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(Tab1).apply(this, arguments));
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(Tab).apply(this, arguments));
 		}
 
-		_createClass(Tab1, [{
+		_createClass(Tab, [{
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
 					'div',
-					{ style: { height: '200px', width: '100%' } },
-					'Tab1'
+					{ style: { height: '100%', width: '100%', background: this.props.bg } },
+					this.props.children
 				);
 			}
 		}]);
 
-		return Tab1;
-	}(_react2.default.Component);
-
-	var Tab2 = function (_React$Component3) {
-		_inherits(Tab2, _React$Component3);
-
-		function Tab2() {
-			_classCallCheck(this, Tab2);
-
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(Tab2).apply(this, arguments));
-		}
-
-		_createClass(Tab2, [{
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					{ style: { height: '200px', width: '100%' } },
-					'Tab2'
-				);
-			}
-		}]);
-
-		return Tab2;
-	}(_react2.default.Component);
-
-	var Tab3 = function (_React$Component4) {
-		_inherits(Tab3, _React$Component4);
-
-		function Tab3() {
-			_classCallCheck(this, Tab3);
-
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(Tab3).apply(this, arguments));
-		}
-
-		_createClass(Tab3, [{
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					{ style: { height: '200px', width: '100%' } },
-					'Tab3'
-				);
-			}
-		}]);
-
-		return Tab3;
+		return Tab;
 	}(_react2.default.Component);
 
 	_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app'));
@@ -19848,6 +19814,7 @@
 			key: 'bindFunc',
 			value: function bindFunc() {
 				this.renderChildren = this.renderChildren.bind(this);
+				this.onTabClick = this.onTabClick.bind(this);
 			}
 		}, {
 			key: 'renderChildren',
@@ -19885,10 +19852,10 @@
 				return _react2.default.createElement(
 					'div',
 					{ className: 'tabs' },
-					_react2.default.createElement(_Nav2.default, { panels: this.props.children, onTabClick: this.onTabClick.bind(this) }),
+					_react2.default.createElement(_Nav2.default, { panels: this.props.children, onTabClick: this.onTabClick.bind(this), activeIndex: this.state.activeIndex }),
 					_react2.default.createElement(
 						_HorizontalWrapper2.default,
-						{ tabWidth: this.state.tabWidth, tabCount: this.state.tabCount, activeIndex: this.state.activeIndex },
+						{ onTabClick: this.onTabClick, tabHeight: this.props.tabHeight, tabWidth: this.state.tabWidth, tabCount: this.state.tabCount, activeIndex: this.state.activeIndex },
 						this.renderChildren()
 					)
 				);
@@ -38182,7 +38149,7 @@
 
 
 	// module
-	exports.push([module.id, "tabs {\n\tlist-style: none;\n}\n\n.tabs .active {\n\tbackground: #f5f5f5;\n}\n\n.tabs .tab-panel {\n\tpadding: 10px;\n\tborder-bottom: 1px solid #ccc;  \n\tlist-style: none;\n\tfloat: left;\n} ", ""]);
+	exports.push([module.id, "tabs {\n\tlist-style: none;\n}\n\n.tabs .tab-panel {\n\tlist-style: none;\n\tfloat: left;\n\theight: 100%;\n} ", ""]);
 
 	// exports
 
@@ -38558,6 +38525,15 @@
 				return navTabs;
 			}
 		}, {
+			key: 'componentWillUpdate',
+			value: function componentWillUpdate(nextProps) {
+				if (nextProps.activeIndex !== this.state.activeIndex) {
+					this.setState({
+						activeIndex: nextProps.activeIndex
+					});
+				}
+			}
+		}, {
 			key: 'onTabClick',
 			value: function onTabClick(index) {
 				this.setState({
@@ -38694,10 +38670,16 @@
 	var HorizontalWrapper = function (_React$Component) {
 		_inherits(HorizontalWrapper, _React$Component);
 
-		function HorizontalWrapper() {
+		function HorizontalWrapper(props) {
 			_classCallCheck(this, HorizontalWrapper);
 
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(HorizontalWrapper).apply(this, arguments));
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(HorizontalWrapper).call(this, props));
+
+			_this.onIscrollTouchEnd = _this.onIscrollTouchEnd.bind(_this);
+			_this.state = {
+				activeIndex: 0
+			};
+			return _this;
 		}
 
 		_createClass(HorizontalWrapper, [{
@@ -38712,14 +38694,40 @@
 					probeType: 3,
 					momentum: false
 				});
+				this.setState({
+					activeIndex: this.props.activeIndex
+				});
 				setTimeout(function () {
 					_this2.scroller.refresh();
 				}, 1);
+				this.scroller.on('iscrollTouchEnd', this.onIscrollTouchEnd);
+			}
+		}, {
+			key: 'onIscrollTouchEnd',
+			value: function onIscrollTouchEnd() {
+				var nextIndex = this.state.activeIndex;
+				if (this.scroller.x >= 0) {
+					if (nextIndex === 1) {
+						nextIndex = 0;
+					}
+				} else if (Math.abs(this.scroller.x) >= this.props.tabWidth / 2 + nextIndex * this.props.tabWidth) {
+					++nextIndex;
+				} else if (Math.abs(this.scroller.x) < nextIndex * this.props.tabWidth - this.props.tabWidth / 2) {
+					--nextIndex;
+				}
+				nextIndex >= this.props.tabCount ? nextIndex = this.props.tabCount - 1 : nextIndex < 0 ? nextIndex = 0 : nextIndex;
+				this.setState({
+					activeIndex: nextIndex
+				});
+				this.props.onTabClick(nextIndex);
+				this.scroller.scrollTo(this.props.tabWidth * nextIndex * -1, 0, 300);
 			}
 		}, {
 			key: 'componentWillUpdate',
-			value: function componentWillUpdate(nextProps) {
-				this.scroller.scrollTo(-(this.props.tabWidth * nextProps.activeIndex), 0, 200);
+			value: function componentWillUpdate(nextProps, nextStates) {
+				if (nextProps.activeIndex !== this.props.activeIndex) {
+					this.scroller.scrollTo(-(this.props.tabWidth * nextProps.activeIndex), 0, 200);
+				}
 			}
 		}, {
 			key: 'render',
@@ -38729,7 +38737,7 @@
 				};
 				return _react2.default.createElement(
 					'div',
-					{ className: 'horizontal-wrapper' },
+					{ className: 'horizontal-wrapper', style: { height: this.props.tabHeight } },
 					_react2.default.createElement(
 						'div',
 						{ className: 'scroller-wrapper', style: scrollerStyle },
@@ -38779,7 +38787,7 @@
 
 
 	// module
-	exports.push([module.id, ".horizontal-wrapper {\n\twidth:100%;\n\tposition: relative;\n\toverflow: hidden;\n\theight: 300px;\n}\n\n.horizontal-wrapper  > .scroller-wrapper {\n\tposition: absolute;\n}", ""]);
+	exports.push([module.id, ".horizontal-wrapper {\n\twidth:100%;\n\tposition: relative;\n\toverflow: hidden;\n}\n\n.horizontal-wrapper  > .scroller-wrapper {\n\tposition: absolute;\n\theight: 100%;\n}", ""]);
 
 	// exports
 

@@ -18,6 +18,7 @@ class ReactTabs extends React.Component {
 
 	bindFunc() {
 		this.renderChildren = this.renderChildren.bind(this);
+		this.onTabClick = this.onTabClick.bind(this);
 	}
 
 	renderChildren() {
@@ -48,8 +49,8 @@ class ReactTabs extends React.Component {
 	render() {
 		return (
 			<div className="tabs">
-				<Nav panels={this.props.children} onTabClick={this.onTabClick.bind(this)}/>
-				<HorizontalWrapper tabWidth={this.state.tabWidth}  tabCount={this.state.tabCount}  activeIndex={this.state.activeIndex}>
+				<Nav panels={this.props.children} onTabClick={this.onTabClick.bind(this)} activeIndex={this.state.activeIndex}/>
+				<HorizontalWrapper onTabClick={this.onTabClick} tabHeight={this.props.tabHeight} tabWidth={this.state.tabWidth}  tabCount={this.state.tabCount}  activeIndex={this.state.activeIndex}>
 					{this.renderChildren()}
 				</HorizontalWrapper>
 			</div>	

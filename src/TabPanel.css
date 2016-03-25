@@ -2,13 +2,8 @@ tabs {
 	list-style: none;
 }
 
-.tabs .active {
-	background: #f5f5f5;
-}
-
 .tabs .tab-panel {
-	padding: 10px;
-	border-bottom: 1px solid #ccc;  
 	list-style: none;
 	float: left;
+	height: 100%;
 } 

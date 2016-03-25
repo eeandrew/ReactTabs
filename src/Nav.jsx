@@ -20,6 +20,15 @@ export default class Nav extends React.Component {
 		return navTabs;
 	}
 
+	componentWillUpdate(nextProps) {
+		if(nextProps.activeIndex !== this.state.activeIndex){
+			this.setState({
+				activeIndex : nextProps.activeIndex
+			})
+		}
+
+	}
+
 	onTabClick(index) {
 		this.setState({
 			activeIndex : index
