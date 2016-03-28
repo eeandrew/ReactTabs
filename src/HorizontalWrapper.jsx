@@ -44,8 +44,10 @@ export default class HorizontalWrapper extends React.Component {
 		this.setState({
 			activeIndex : nextIndex,
 		});
-		this.props.onTabClick(nextIndex);
 		this.scroller.scrollTo(this.props.tabWidth*nextIndex*-1,0,300);
+		setTimeout(()=>{
+			this.props.onTabClick(nextIndex);
+		},300);
 	}
 
 	componentWillUpdate(nextProps,nextStates) {

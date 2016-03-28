@@ -118,6 +118,15 @@
 							{ bg: 'rgb(41,201,51)' },
 							'Tab3'
 						)
+					),
+					_react2.default.createElement(
+						TabPanel,
+						{ tab: 'Tab4', key: 4 },
+						_react2.default.createElement(
+							Tab,
+							{ bg: 'rgb(41,201,51)' },
+							'Tab4'
+						)
 					)
 				);
 			}
@@ -38705,6 +38714,8 @@
 		}, {
 			key: 'onIscrollTouchEnd',
 			value: function onIscrollTouchEnd() {
+				var _this3 = this;
+
 				var nextIndex = this.state.activeIndex;
 				if (this.scroller.x >= 0) {
 					if (nextIndex === 1) {
@@ -38719,8 +38730,10 @@
 				this.setState({
 					activeIndex: nextIndex
 				});
-				this.props.onTabClick(nextIndex);
 				this.scroller.scrollTo(this.props.tabWidth * nextIndex * -1, 0, 300);
+				setTimeout(function () {
+					_this3.props.onTabClick(nextIndex);
+				}, 300);
 			}
 		}, {
 			key: 'componentWillUpdate',

@@ -11,6 +11,7 @@ class App extends React.Component {
 				<TabPanel tab="Tab1" key={1}><Tab bg="rgb(251,73,1)">Tab1</Tab></TabPanel>
 				<TabPanel tab="Tab2" key={2}><Tab bg="rgb(253,181,36)">Tab2</Tab></TabPanel>
 				<TabPanel tab="Tab3" key={3}><Tab bg="rgb(41,201,51)">Tab3</Tab></TabPanel>
+				<TabPanel tab="Tab4" key={4}><Tab bg="rgb(41,201,51)">Tab4</Tab></TabPanel>
 			</ReactTabs>
 		);
 	}
