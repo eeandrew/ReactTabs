@@ -3,15 +3,27 @@
 	display: -webkit-flex;
 	margin:0;
 	padding:0;
+	position: relative;
 }
 
 .nav .nav-item {
 	list-style: none;
-	margin:5px;
-	padding:5px;
-	background: #F5F5F5;
+	flex: 1;
+	text-align: center;
+	padding:8px 20px;
 }
 
 .nav .nav-item.active {
-	border-bottom:2px solid #ccc;
+	color:#3fc7fa;
+}
+
+.nav .indicator {
+	position: absolute;
+	bottom: 0;
+	background: #3fc7fa;
+	border-bottom:2px solid #3fc7fa; 
+	width: 100px;
+	left: 0;
+	transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); 
+	transition-duration: 400ms; 
 }

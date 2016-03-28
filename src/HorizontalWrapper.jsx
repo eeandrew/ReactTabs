@@ -40,7 +40,7 @@ export default class HorizontalWrapper extends React.Component {
 		}else if(Math.abs(this.scroller.x) < (nextIndex*this.props.tabWidth - this.props.tabWidth/2)) {
 			--nextIndex
 		}
-		nextIndex >= this.props.tabCount ? nextIndex=(this.props.tabCount - 1) : nextIndex < 0 ? nextIndex=0 :nextIndex
+		nextIndex >= this.props.tabCount ? nextIndex=(this.props.tabCount - 1) : nextIndex < 0 ? nextIndex=0 :nextIndex;
 		this.setState({
 			activeIndex : nextIndex,
 		});
@@ -52,7 +52,7 @@ export default class HorizontalWrapper extends React.Component {
 
 	componentWillUpdate(nextProps,nextStates) {
 		if(nextProps.activeIndex !== this.props.activeIndex){
-			this.scroller.scrollTo(-(this.props.tabWidth * nextProps.activeIndex),0,200);
+			this.scroller.scrollTo(-(this.props.tabWidth * nextProps.activeIndex),0,300);
 		}
 	}
 

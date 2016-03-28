@@ -97,7 +97,7 @@
 						{ tab: 'Tab1', key: 1 },
 						_react2.default.createElement(
 							Tab,
-							{ bg: 'rgb(251,73,1)' },
+							{ bg: '#ccc' },
 							'Tab1'
 						)
 					),
@@ -106,7 +106,7 @@
 						{ tab: 'Tab2', key: 2 },
 						_react2.default.createElement(
 							Tab,
-							{ bg: 'rgb(253,181,36)' },
+							{ bg: '#EDF2F6' },
 							'Tab2'
 						)
 					),
@@ -115,7 +115,7 @@
 						{ tab: 'Tab3', key: 3 },
 						_react2.default.createElement(
 							Tab,
-							{ bg: 'rgb(41,201,51)' },
+							{ bg: '#D8E2E9' },
 							'Tab3'
 						)
 					),
@@ -124,7 +124,7 @@
 						{ tab: 'Tab4', key: 4 },
 						_react2.default.createElement(
 							Tab,
-							{ bg: 'rgb(41,201,51)' },
+							{ bg: '#bebebe' },
 							'Tab4'
 						)
 					)
@@ -38489,6 +38489,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactDom = __webpack_require__(2);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
 	var _classnames = __webpack_require__(291);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
@@ -38512,8 +38516,12 @@
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Nav).call(this, props));
 
 			_this.state = {
-				activeIndex: 0
+				activeIndex: 0,
+				tabWidth: 0,
+				left: 0,
+				transform: null
 			};
+			_this.moveIndicator = _this.moveIndicator.bind(_this);
 			return _this;
 		}
 
@@ -38535,12 +38543,42 @@
 			}
 		}, {
 			key: 'componentWillUpdate',
-			value: function componentWillUpdate(nextProps) {
+			value: function componentWillUpdate(nextProps, nextState) {
+				this.moveIndicator(this.state.activeIndex, nextState.activeIndex);
 				if (nextProps.activeIndex !== this.state.activeIndex) {
 					this.setState({
 						activeIndex: nextProps.activeIndex
 					});
 				}
+			}
+		}, {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				var totalWidth = _reactDom2.default.findDOMNode(this).offsetWidth;
+				var tabCount = this.props.panels.length;
+				this.setState({
+					tabWidth: totalWidth / tabCount
+				});
+			}
+		}, {
+			key: 'moveIndicator',
+			value: function moveIndicator(previousIndex, nextIndex) {
+				var _this3 = this;
+
+				if (previousIndex === nextIndex) return;
+				var activeIndex = this.state.activeIndex;
+				var tabWidth = this.state.tabWidth;
+				var translateX = tabWidth * nextIndex;
+				var scaleX = 1 + Math.abs(nextIndex - previousIndex) / 2;
+				this.setState({
+					left: translateX + 'px',
+					transform: 'scale3D(' + scaleX + ',1,1) translateZ(0)'
+				});
+				setTimeout(function () {
+					_this3.setState({
+						transform: 'scale3D(1,1,1) translateZ(0)'
+					});
+				}, 100);
 			}
 		}, {
 			key: 'onTabClick',
@@ -38556,7 +38594,8 @@
 				return _react2.default.createElement(
 					'ul',
 					{ className: 'nav' },
-					this.renderNavTabs.apply(this)
+					this.renderNavTabs.apply(this),
+					_react2.default.createElement('div', { className: 'indicator', style: { left: this.state.left, transform: this.state.transform } })
 				);
 			}
 		}]);
@@ -38601,7 +38640,7 @@
 
 
 	// module
-	exports.push([module.id, ".nav {\n\tdisplay: flex;\n\tdisplay: -webkit-flex;\n\tmargin:0;\n\tpadding:0;\n}\n\n.nav .nav-item {\n\tlist-style: none;\n\tmargin:5px;\n\tpadding:5px;\n\tbackground: #F5F5F5;\n}\n\n.nav .nav-item.active {\n\tborder-bottom:2px solid #ccc;\n}", ""]);
+	exports.push([module.id, ".nav {\n\tdisplay: flex;\n\tdisplay: -webkit-flex;\n\tmargin:0;\n\tpadding:0;\n\tposition: relative;\n}\n\n.nav .nav-item {\n\tlist-style: none;\n\tflex: 1;\n\ttext-align: center;\n\tpadding:8px 20px;\n}\n\n.nav .nav-item.active {\n\tcolor:#3fc7fa;\n}\n\n.nav .indicator {\n\tposition: absolute;\n\tbottom: 0;\n\tbackground: #3fc7fa;\n\tborder-bottom:2px solid #3fc7fa; \n\twidth: 100px;\n\tleft: 0;\n\ttransition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); \n\ttransition-duration: 400ms; \n}", ""]);
 
 	// exports
 
@@ -38739,7 +38778,7 @@
 			key: 'componentWillUpdate',
 			value: function componentWillUpdate(nextProps, nextStates) {
 				if (nextProps.activeIndex !== this.props.activeIndex) {
-					this.scroller.scrollTo(-(this.props.tabWidth * nextProps.activeIndex), 0, 200);
+					this.scroller.scrollTo(-(this.props.tabWidth * nextProps.activeIndex), 0, 300);
 				}
 			}
 		}, {
