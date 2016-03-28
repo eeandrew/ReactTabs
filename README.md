@@ -2,6 +2,8 @@
 
 ## 支持滑动切换的tab控件
 
+![image](https://github.com/eeandrew/ReadmeResource/blob/master/img/react-tab/scale-tab-demo.gif)
+
 ##使用
 
 ```
