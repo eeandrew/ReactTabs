@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './HorizontalWrapper.css';
+import IScroll from './lib/iscroll-probe-min';
 
 export default class HorizontalWrapper extends React.Component {
 	constructor(props) {

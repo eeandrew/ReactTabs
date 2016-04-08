@@ -1,7 +1,7 @@
 module.exports = {
 	context : __dirname + '/src',
 	entry : [
-		'./main.jsx'
+		'./main.js'
 	],
 	output : {
 		path: __dirname + '/assets/',

@@ -1,8 +1,8 @@
 import React from 'react';
-import TabPanel from './TabPanel.jsx';
-import Nav from './Nav.jsx';
+import TabPanel from './TabPanel.js';
+import Nav from './Nav.js';
 import './ReactTabs.css';
-import HorizontalWrapper from './HorizontalWrapper.jsx';
+import HorizontalWrapper from './HorizontalWrapper.js';
 import ReactDOM from 'react-dom';
 
 class ReactTabs extends React.Component {

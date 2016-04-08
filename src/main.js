@@ -1,6 +1,6 @@
 import ReactDom from 'react-dom';
 import React from 'react';
-import ReactTabs from './ReactTabs.jsx';
+import ReactTabs from './ReactTabs.js';
 
 let TabPanel = ReactTabs.TabPanel;
 
