@@ -19,10 +19,17 @@ export default class Nav extends React.Component {
 	renderNavTabs() {
 		const navTabs = [];
 		const panels = this.props.panels;
+		if(!panels[0].props.tab)return null;
 		React.Children.forEach(panels,(panel,index) => {
 			navTabs.push(<li className={"nav-item " + (this.state.activeIndex === index ? 'active' : '')} key={index} onClick={this.onTabClick.bind(this,index)}>{panel.props.tab}</li>)
 		})
 		return navTabs;
+	}
+
+	renderIndicator() {
+		const panels = this.props.panels;
+		if(!panels[0].props.tab)return null;
+		return	(<div className="indicator" style={{left:this.state.left,transform:this.state.transform}}/>);
 	}
 
 	componentWillUpdate(nextProps,nextState) {
@@ -70,7 +77,7 @@ export default class Nav extends React.Component {
 		return (
 			<ul className="nav">
 				{this.renderNavTabs.apply(this)}
-				<div className="indicator" style={{left:this.state.left,transform:this.state.transform}}/>	
+				{this.renderIndicator.apply(this)}
 			</ul>
 		);
 	}

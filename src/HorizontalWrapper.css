@@ -1,3 +1,7 @@
+.outer-wapper {
+	position: relative;
+}
+
 .horizontal-wrapper {
 	width:100%;
 	position: relative;
@@ -8,3 +12,4 @@
 	position: absolute;
 	height: 100%;
 }
+

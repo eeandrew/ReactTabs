@@ -50,7 +50,7 @@ class ReactTabs extends React.Component {
 		return (
 			<div className="tabs">
 				<Nav panels={this.props.children} onTabClick={this.onTabClick.bind(this)} activeIndex={this.state.activeIndex}/>
-				<HorizontalWrapper onTabClick={this.onTabClick} tabHeight={this.props.tabHeight} tabWidth={this.state.tabWidth}  tabCount={this.state.tabCount}  activeIndex={this.state.activeIndex}>
+				<HorizontalWrapper indicator={this.props.indicator} onTabClick={this.onTabClick} tabHeight={this.props.tabHeight} tabWidth={this.state.tabWidth}  tabCount={this.state.tabCount}  activeIndex={this.state.activeIndex}>
 					{this.renderChildren()}
 				</HorizontalWrapper>
 			</div>	

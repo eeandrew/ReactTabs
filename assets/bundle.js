@@ -91,10 +91,10 @@
 			value: function render() {
 				return _react2.default.createElement(
 					_ReactTabs2.default,
-					{ tabHeight: '200px' },
+					{ tabHeight: '200px', indicator: 'dot' },
 					_react2.default.createElement(
 						TabPanel,
-						{ tab: 'Tab1', key: 1 },
+						{ key: 1 },
 						_react2.default.createElement(
 							Tab,
 							{ bg: '#ccc' },
@@ -103,7 +103,7 @@
 					),
 					_react2.default.createElement(
 						TabPanel,
-						{ tab: 'Tab2', key: 2 },
+						{ key: 2 },
 						_react2.default.createElement(
 							Tab,
 							{ bg: '#EDF2F6' },
@@ -112,20 +112,11 @@
 					),
 					_react2.default.createElement(
 						TabPanel,
-						{ tab: 'Tab3', key: 3 },
+						{ key: 3 },
 						_react2.default.createElement(
 							Tab,
 							{ bg: '#D8E2E9' },
 							'Tab3'
-						)
-					),
-					_react2.default.createElement(
-						TabPanel,
-						{ tab: 'Tab4', key: 4 },
-						_react2.default.createElement(
-							Tab,
-							{ bg: '#bebebe' },
-							'Tab4'
 						)
 					)
 				);
@@ -19864,7 +19855,7 @@
 					_react2.default.createElement(_Nav2.default, { panels: this.props.children, onTabClick: this.onTabClick.bind(this), activeIndex: this.state.activeIndex }),
 					_react2.default.createElement(
 						_HorizontalWrapper2.default,
-						{ onTabClick: this.onTabClick, tabHeight: this.props.tabHeight, tabWidth: this.state.tabWidth, tabCount: this.state.tabCount, activeIndex: this.state.activeIndex },
+						{ indicator: this.props.indicator, onTabClick: this.onTabClick, tabHeight: this.props.tabHeight, tabWidth: this.state.tabWidth, tabCount: this.state.tabCount, activeIndex: this.state.activeIndex },
 						this.renderChildren()
 					)
 				);
@@ -38532,6 +38523,7 @@
 
 				var navTabs = [];
 				var panels = this.props.panels;
+				if (!panels[0].props.tab) return null;
 				_react2.default.Children.forEach(panels, function (panel, index) {
 					navTabs.push(_react2.default.createElement(
 						'li',
@@ -38540,6 +38532,13 @@
 					));
 				});
 				return navTabs;
+			}
+		}, {
+			key: 'renderIndicator',
+			value: function renderIndicator() {
+				var panels = this.props.panels;
+				if (!panels[0].props.tab) return null;
+				return _react2.default.createElement('div', { className: 'indicator', style: { left: this.state.left, transform: this.state.transform } });
 			}
 		}, {
 			key: 'componentWillUpdate',
@@ -38595,7 +38594,7 @@
 					'ul',
 					{ className: 'nav' },
 					this.renderNavTabs.apply(this),
-					_react2.default.createElement('div', { className: 'indicator', style: { left: this.state.left, transform: this.state.transform } })
+					this.renderIndicator.apply(this)
 				);
 			}
 		}]);
@@ -38680,7 +38679,7 @@
 
 
 	// module
-	exports.push([module.id, ".tabs {\n\tbackground: #fff;\n}", ""]);
+	exports.push([module.id, ".tabs {\n\tbackground: #fff;\n}\n", ""]);
 
 	// exports
 
@@ -38711,6 +38710,10 @@
 
 	var _iscrollProbeMin2 = _interopRequireDefault(_iscrollProbeMin);
 
+	var _DotIndicator = __webpack_require__(305);
+
+	var _DotIndicator2 = _interopRequireDefault(_DotIndicator);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -38728,6 +38731,7 @@
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(HorizontalWrapper).call(this, props));
 
 			_this.onIscrollTouchEnd = _this.onIscrollTouchEnd.bind(_this);
+			_this.getIndicator = _this.getIndicator.bind(_this);
 			_this.state = {
 				activeIndex: 0
 			};
@@ -38739,13 +38743,21 @@
 			value: function componentDidMount() {
 				var _this2 = this;
 
-				this.scroller = new _iscrollProbeMin2.default(_reactDom2.default.findDOMNode(this), {
+				var scrollerConfig = {
 					scrollX: true,
 					scrollY: false,
 					scrollbars: false,
 					probeType: 3,
 					momentum: false
-				});
+				};
+				console.log(document.getElementById('indicator'));
+				if (!!this.props.indicator) {
+					scrollerConfig.indicators = {
+						el: document.getElementById('indicator'),
+						resize: false
+					};
+				}
+				this.scroller = new _iscrollProbeMin2.default(_reactDom2.default.findDOMNode(this.refs.hscroller), scrollerConfig);
 				this.setState({
 					activeIndex: this.props.activeIndex
 				});
@@ -38786,6 +38798,14 @@
 				}
 			}
 		}, {
+			key: 'getIndicator',
+			value: function getIndicator() {
+				if (!('indicator' in this.props)) return null;
+				if (this.props.indicator === 'dot') {
+					return _react2.default.createElement(_DotIndicator2.default, { count: this.props.children.length });
+				}
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				var scrollerStyle = {
@@ -38793,12 +38813,17 @@
 				};
 				return _react2.default.createElement(
 					'div',
-					{ className: 'horizontal-wrapper', style: { height: this.props.tabHeight } },
+					{ className: 'outer-wapper' },
 					_react2.default.createElement(
 						'div',
-						{ className: 'scroller-wrapper', style: scrollerStyle },
-						this.props.children
-					)
+						{ className: 'horizontal-wrapper', style: { height: this.props.tabHeight }, ref: 'hscroller' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'scroller-wrapper', style: scrollerStyle },
+							this.props.children
+						)
+					),
+					this.getIndicator.apply(this)
 				);
 			}
 		}]);
@@ -38843,7 +38868,7 @@
 
 
 	// module
-	exports.push([module.id, ".horizontal-wrapper {\n\twidth:100%;\n\tposition: relative;\n\toverflow: hidden;\n}\n\n.horizontal-wrapper  > .scroller-wrapper {\n\tposition: absolute;\n\theight: 100%;\n}", ""]);
+	exports.push([module.id, ".outer-wapper {\n\tposition: relative;\n}\n\n.horizontal-wrapper {\n\twidth:100%;\n\tposition: relative;\n\toverflow: hidden;\n}\n\n.horizontal-wrapper  > .scroller-wrapper {\n\tposition: absolute;\n\theight: 100%;\n}\n\n", ""]);
 
 	// exports
 
@@ -39219,6 +39244,136 @@
 	      }
 	    } }, e.utils = h, "undefined" != typeof module && module.exports ? module.exports = e : t.IScroll = e;
 	}(window, document, Math);
+
+/***/ },
+/* 305 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(148);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(2);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	__webpack_require__(306);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var DotIndicator = function (_React$Component) {
+	  _inherits(DotIndicator, _React$Component);
+
+	  function DotIndicator(props) {
+	    _classCallCheck(this, DotIndicator);
+
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(DotIndicator).call(this, props));
+
+	    _this.state = {
+	      style: {
+	        marginLeft: '0'
+	      }
+	    };
+	    _this.adjustMargin = _this.adjustMargin.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(DotIndicator, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.adjustMargin();
+	    }
+	  }, {
+	    key: 'adjustMargin',
+	    value: function adjustMargin() {
+	      var parentWidth = _reactDom2.default.findDOMNode(this).parentNode.offsetWidth;
+	      var selfWidth = _reactDom2.default.findDOMNode(this).offsetWidth;
+	      var marginLeft = (parentWidth - selfWidth) / 2;
+	      this.setState({
+	        style: {
+	          marginLeft: marginLeft + 'px'
+	        }
+	      });
+	    }
+	  }, {
+	    key: 'getPageIndicator',
+	    value: function getPageIndicator() {
+	      var pageIndicator = [];
+	      for (var i = 0; i < this.props.count; i++) {
+	        pageIndicator.push(_react2.default.createElement('div', { className: 'dotty inactive', key: i }));
+	      }
+	      return pageIndicator;
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { id: 'indicator', className: 'dotty-indicator', style: this.state.style },
+	        _react2.default.createElement('div', { className: 'dotty ' }),
+	        this.getPageIndicator.apply(this)
+	      );
+	    }
+	  }]);
+
+	  return DotIndicator;
+	}(_react2.default.Component);
+
+	exports.default = DotIndicator;
+
+/***/ },
+/* 306 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(307);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(295)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./DotIndicator.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./DotIndicator.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 307 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(294)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".dotty-indicator {\n\tposition: absolute;\n\theight: 20px;\n\twidth: 150px;\n\tmargin: -30px auto;\n\tdisplay: flex;\n\tjustify-content: space-between;\n\t-webkit-display: flex;\n\t-webkit-justify-content: space-between;\n}\n\n.dotty {\n\tposition: absolute;\n\twidth: 20px;\n\theight: 20px;\n\tborder-radius: 10px;\n\tbackground: #fc7946;\n\tz-index: 1;\n}\n\n.inactive {\n\tbackground:#697d91;\n\tposition: relative;\n\tz-index: 0;\n}", ""]);
+
+	// exports
+
 
 /***/ }
 /******/ ]);

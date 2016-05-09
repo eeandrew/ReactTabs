@@ -2,24 +2,34 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './HorizontalWrapper.css';
 import IScroll from './lib/iscroll-probe-min';
+import DotIndicator from './DotIndicator.js';
 
 export default class HorizontalWrapper extends React.Component {
 	constructor(props) {
 		super(props);
 		this.onIscrollTouchEnd = this.onIscrollTouchEnd.bind(this);
+		this.getIndicator = this.getIndicator.bind(this);
 		this.state = {
 			activeIndex : 0
 		};
 	}
 
 	componentDidMount() {
-		this.scroller = new IScroll(ReactDOM.findDOMNode(this),{
+		var scrollerConfig = {
 			scrollX : true,
 			scrollY : false,
 			scrollbars : false,
 			probeType : 3,
 			momentum : false,
-		});
+		};
+		console.log(document.getElementById('indicator'));
+		if(!!this.props.indicator) {
+			scrollerConfig.indicators = {
+				el: document.getElementById('indicator'),
+				resize: false
+			}; 
+		}
+		this.scroller = new IScroll(ReactDOM.findDOMNode(this.refs.hscroller),scrollerConfig);
 		this.setState({
 			activeIndex : this.props.activeIndex
 		});
@@ -57,16 +67,26 @@ export default class HorizontalWrapper extends React.Component {
 		}
 	}
 
+	getIndicator() {
+		if(!('indicator' in this.props))return null;
+		if(this.props.indicator === 'dot') {
+			return <DotIndicator count={this.props.children.length}/>;
+		}
+	}
+
 	render() {
 		let scrollerStyle = {
 			width : this.props.tabWidth * this.props.tabCount  + 'px'
 		}
 		return (
-			<div className="horizontal-wrapper" style={{height:this.props.tabHeight}}>
-				<div className="scroller-wrapper" style={scrollerStyle}>
-					{this.props.children}
+			<div className="outer-wapper">	
+				<div className="horizontal-wrapper" style={{height:this.props.tabHeight}} ref="hscroller">
+					<div className="scroller-wrapper" style={scrollerStyle}>
+						{this.props.children}
+					</div>
 				</div>
-			</div>
+				{this.getIndicator.apply(this)}
+			</div>	
 		);
 	}
 }
