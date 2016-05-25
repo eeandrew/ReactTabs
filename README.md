@@ -13,3 +13,7 @@
  <TabPanel tab="Tab3" key={3}><Tab bg="rgb(41,201,51)">Tab3</Tab></TabPanel>
 </ReactTabs>
 ```
+
+## Log
+
+1. 2016-05-25 增加autoHeight参数，支持根据内容自动调整高度
