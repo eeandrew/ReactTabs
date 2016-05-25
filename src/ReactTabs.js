@@ -13,6 +13,7 @@ class ReactTabs extends React.Component {
 		this.state = {
 			activeIndex : 0,
 			tabWidth : 0,
+			scrollHeight : 0,
 		};
 	}
 
@@ -38,6 +39,13 @@ class ReactTabs extends React.Component {
 			tabWidth : ReactDOM.findDOMNode(this).offsetWidth,
 			tabCount : this.props.children.length,
 		});
+		if(this.props.autoHeight) {
+		 let scrollHeight = ReactDOM.findDOMNode(this.refs.scroller).querySelector('.horizontal-wrapper').scrollHeight;
+		 let offsetHeight = ReactDOM.findDOMNode(this.refs.scroller).querySelector('.horizontal-wrapper').offsetHeight;
+		 this.setState({
+		 	scrollHeight: Math.max(scrollHeight,offsetHeight)
+		 });
+		}
 	}
 
 	onTabClick(index) {
@@ -47,10 +55,14 @@ class ReactTabs extends React.Component {
 	}
 
 	render() {
+		let tabHeight = this.props.tabHeight;
+		if(this.props.autoHeight) {
+			tabHeight = this.state.scrollHeight;
+		}
 		return (
 			<div className="tabs">
 				<Nav panels={this.props.children} onTabClick={this.onTabClick.bind(this)} activeIndex={this.state.activeIndex}/>
-				<HorizontalWrapper indicator={this.props.indicator} onTabClick={this.onTabClick} tabHeight={this.props.tabHeight} tabWidth={this.state.tabWidth}  tabCount={this.state.tabCount}  activeIndex={this.state.activeIndex}>
+				<HorizontalWrapper ref="scroller" indicator={this.props.indicator} onTabClick={this.onTabClick} tabHeight={tabHeight} tabWidth={this.state.tabWidth}  tabCount={this.state.tabCount}  activeIndex={this.state.activeIndex}>
 					{this.renderChildren()}
 				</HorizontalWrapper>
 			</div>	

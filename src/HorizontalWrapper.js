@@ -22,7 +22,6 @@ export default class HorizontalWrapper extends React.Component {
 			probeType : 3,
 			momentum : false,
 		};
-		console.log(document.getElementById('indicator'));
 		if(!!this.props.indicator) {
 			scrollerConfig.indicators = {
 				el: document.getElementById('indicator'),
