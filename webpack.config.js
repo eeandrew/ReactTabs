@@ -1,11 +1,11 @@
-module.exports = {
+const config = {
 	context : __dirname + '/src',
-	entry : [
-		'./main.js'
-	],
+	entry : {
+		index:'./main.js'
+	},
 	output : {
 		path: __dirname + '/assets/',
-		filename: 'bundle.js',
+		filename: '[name].js',
 	},
 	module: {
 		loaders : [
@@ -24,3 +24,5 @@ module.exports = {
 		]
 	}
 };
+
+export default config;

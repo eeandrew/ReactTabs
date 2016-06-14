@@ -4,17 +4,18 @@
   "description": "react swipe components,inspired by iScroll",
   "main": "webpack.config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "bundle": "babel-node bundle.js"
   },
   "author": "boyzhoulin@sina.com",
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.5.2",
     "babel-loader": "^6.2.2",
-    "babel-preset-es2015": "^6.5.0",
+    "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.5.0",
     "css-loader": "^0.23.1",
-    "style-loader": "^0.13.0"
+    "style-loader": "^0.13.0",
+    "webpack": "^1.13.1"
   },
   "dependencies": {
     "classnames": "^2.2.3",
